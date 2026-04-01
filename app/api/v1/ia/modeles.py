@@ -9,7 +9,7 @@ from ....core.dependencies import get_current_active_user
 from ....core.permissions import require_roles
 from ....models.enums import UserRole
 
-router = APIRouter(prefix="/modeles-ia", tags=["IA - Modèles"])
+router = APIRouter()
 
 @router.get("/", response_model=List[ModeleIAResponse])
 async def get_modeles(

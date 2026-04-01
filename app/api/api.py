@@ -10,6 +10,8 @@ from .v1 import travaux_sol, recoltes, lots
 #  , analyses_sol
 from .v1 import transformations
 # , stocks, clients, ventes, historique
+from .v1.ia import inferences, modeles, predictions, recommandations
+from .v1.iot import balises, capteurs, drones, passerelles, releves, stations_meteo
 
 api_router = APIRouter()
 
@@ -31,3 +33,15 @@ api_router.include_router(transformations.router, prefix="/transformations", tag
 # api_router.include_router(clients.router, prefix="/clients", tags=["clients"])
 # api_router.include_router(ventes.router, prefix="/ventes", tags=["ventes"])
 # api_router.include_router(historique.router, prefix="/historique", tags=["historique"])
+
+api_router.include_router(inferences.router, prefix="/inferences", tags=["Inferences IA"])
+api_router.include_router(modeles.router, prefix="/modeles-ia", tags=["IA - Modèles"])
+api_router.include_router(predictions.router, prefix="/predictions", tags=["IA - Prédictions"])
+api_router.include_router(recommandations.router, prefix="/recommandations", tags=["IA - Recommandations"])
+
+api_router.include_router(balises.router, prefix="/balises",tags=["Balises GPS"])
+api_router.include_router(capteurs.router, prefix="/capteurs", tags=["Capteurs IA"])
+api_router.include_router(drones.router, prefix="/drones", tags=["Drones IA"])
+api_router.include_router(passerelles.router, prefix="/passerelles", tags=["Passerelles IA"])
+api_router.include_router(releves.router, prefix="/releves", tags=["Relevés IA"])
+api_router.include_router(stations_meteo.router, prefix="/stations-meteo", tags=["Stations Météo IA"])
