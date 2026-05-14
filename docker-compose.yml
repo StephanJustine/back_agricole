@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_agricole
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: stp
+      POSTGRES_DB: arachide_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - agricole_network
+
+  backend:
+    build: .
+    container_name: fastapi_agricole
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+      - uploads_volume:/app/static/uploads
+    networks:
+      - agricole_network
+    environment:
+      - DATABASE_URL=postgresql://postgres:stp@db:5432/arachide_db
+
+volumes:
+  postgres_data:
+    name: agricole_postgres_data
+  static_volume:
+    name: agricole_static_volume
+  uploads_volume:
+    name: agricole_uploads_volume
+
+networks:
+  agricole_network:
+    name: agricole_network
+    driver: bridge
